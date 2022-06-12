@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-
+import { Navigate } from "react-router";
 class Login extends Component {
   state = {
     username: "",
     passwd: "",
+    user: null,
   };
+
+  componentDidMount() {
+    const _user = this.props.user;
+    if (_user) {
+      Navigate("/");
+    }
+    this.setState({ user: _user });
+  }
 
   constructor(props) {
     super(props);

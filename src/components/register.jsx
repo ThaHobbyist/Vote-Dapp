@@ -1,11 +1,23 @@
 import React, { Component } from "react";
-
+import { Navigate } from "react-router-dom";
 class register extends Component {
   state = {
     username: "",
     email: "",
     passwd: "",
+    user: null,
   };
+
+  useEffect() {
+    if (this.state.user) {
+      Navigate("/dashboard");
+    }
+  }
+
+  componentDidMount() {
+    const _user = this.props.user;
+    this.setState({ user: _user });
+  }
 
   constructor(props) {
     super(props);

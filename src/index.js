@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { MoralisProvider } from "react-moralis";
+import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 const serverURL = process.env.REACT_APP_SERVER_URL;
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <MoralisProvider serverUrl={serverURL} appId={appID}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </MoralisProvider>
   </React.StrictMode>
 );
