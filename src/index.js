@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import { MoralisProvider } from "react-moralis";
 import { BrowserRouter as Router } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const serverURL = process.env.REACT_APP_SERVER_URL;
 const appID = process.env.REACT_APP_APP_ID;

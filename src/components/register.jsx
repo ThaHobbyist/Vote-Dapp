@@ -5,18 +5,13 @@ class register extends Component {
     username: "",
     email: "",
     passwd: "",
-    user: null,
   };
 
-  useEffect() {
-    if (this.state.user) {
+  componentDidMount() {
+    const _isAuthenticated = this.props.isAuthenticated;
+    if (_isAuthenticated) {
       Navigate("/dashboard");
     }
-  }
-
-  componentDidMount() {
-    const _user = this.props.user;
-    this.setState({ user: _user });
   }
 
   constructor(props) {

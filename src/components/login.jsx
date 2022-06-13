@@ -4,15 +4,13 @@ class Login extends Component {
   state = {
     username: "",
     passwd: "",
-    user: null,
   };
 
   componentDidMount() {
-    const _user = this.props.user;
-    if (_user) {
-      Navigate("/");
+    const _isAuthenticated = this.props.isAuthenticated;
+    if (_isAuthenticated) {
+      Navigate("/dashboard");
     }
-    this.setState({ user: _user });
   }
 
   constructor(props) {
@@ -38,53 +36,64 @@ class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h3>Log In</h3>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <h3>Log In</h3>
 
-        <div className="mb-3">
-          <label>Username</label>
-          <input
-            type="username"
-            className="form-control"
-            value={this.state.username}
-            onChange={this.handleChangeEmail}
-            placeholder="Enter username"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={this.state.passwd}
-            onChange={this.handleChangePasswd}
-            placeholder="Enter password"
-          />
-        </div>
-
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
+          <div className="mb-3">
+            <label>Username</label>
             <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
+              type="username"
+              className="form-control"
+              value={this.state.username}
+              onChange={this.handleChangeEmail}
+              placeholder="Enter username"
             />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
           </div>
-        </div>
 
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              value={this.state.passwd}
+              onChange={this.handleChangePasswd}
+              placeholder="Enter password"
+            />
+          </div>
+
+          <div className="mb-3">
+            <div className="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                className="custom-control-input"
+                id="customCheck1"
+              />
+              <label className="custom-control-label" htmlFor="customCheck1">
+                Remember me
+              </label>
+            </div>
+          </div>
+
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary">
+              Log-In
+            </button>
+          </div>
+          <p className="forgot-password text-right">
+            Forgot <a href="#">password?</a>
+          </p>
+        </form>
+        <hr />
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Log-In
+          <button
+            onClick={this.props.onMetamaskLogin}
+            className="btn btn-primary d-flex align-center justify-content-center"
+          >
+            Join with metamask <i className="metamask " />
           </button>
         </div>
-        <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p>
-      </form>
+      </div>
     );
   }
 }

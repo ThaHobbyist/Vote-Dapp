@@ -13,7 +13,8 @@ import Error from "./components/error";
 function App() {
   let navigate = useNavigate();
 
-  const { Moralis, user } = useMoralis();
+  const { Moralis, user, isInitialized, isAuthenticated, authenticate } =
+    useMoralis();
 
   useEffect(() => {
     if (user) {
@@ -49,16 +50,29 @@ function App() {
     console.log("Logged out");
   };
 
-  const notLoginDisplay = () => {
+  const loginDisplay = () => {
     let _class = "nav-item ";
-    _class += user === null ? "inline-block" : "d-none";
+    _class += isAuthenticated ? "inline-block" : "d-none";
     return _class;
   };
 
-  const loginDisplay = () => {
+  const notLoginDisplay = () => {
     let _class = "nav-item ";
-    _class += user === null ? "d-none" : "inline-block";
+    _class += isAuthenticated ? "d-none" : "inline-block";
     return _class;
+  };
+
+  const metamaskLogin = async () => {
+    if (!isAuthenticated) {
+      await authenticate()
+        .then((user) => {
+          console.log("User logged in using metamask: ", user);
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -80,8 +94,20 @@ function App() {
                   Sign up
                 </Link>
               </li>
+              <li className={notLoginDisplay()}>
+                <Link className="nav-link" to={"/sign-up"}>
+                  Sign up
+                </Link>
+              </li>
               <li className={loginDisplay()}>
-                <button onClick={logOut}>Log Out</button>
+                <Link className="nav-link " to={"/dashboard"}>
+                  Dashboard
+                </Link>
+              </li>
+              <li className={loginDisplay()}>
+                <button className="btn btn-outline-dark" onClick={logOut}>
+                  Log Out
+                </button>
               </li>
             </ul>
           </div>
@@ -94,13 +120,24 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route
               path="/sign-in"
-              element={<Login onLogin={login} user={user} />}
+              element={
+                <Login
+                  onLogin={login}
+                  onMetamaskLogin={metamaskLogin}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
             />
             <Route
               path="/sign-up"
-              element={<SignUp onSignUp={signUp} user={user} />}
+              element={
+                <SignUp onSignUp={signUp} isAuthenticated={isAuthenticated} />
+              }
             />
-            <Route path="/dashboard" element={<Dashboard user={user} />} />
+            <Route
+              path="/dashboard"
+              element={<Dashboard isAuthenticated={isAuthenticated} />}
+            />
             <Route path="*" element={<Error />} />
           </Routes>
         </div>

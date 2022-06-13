@@ -82,6 +82,14 @@ html,
   color: #7f7d7d;
   margin: 0;
 }
+
+.metamask {
+  background-image: url("./assets/metamask.svg");
+  background-size: cover;
+  display: inline-block;
+  height: 25px;
+  width: 28px;
+}
 .forgot-password a {
   color: #167bff;
 }
